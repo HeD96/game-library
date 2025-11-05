@@ -46,3 +46,21 @@ class Gamecard {
 
 const addGameButton = document.querySelector(".add-button");
 addGameButton.addEventListener("click", () => { eliasGames.addGame() });
+
+function renderCard(game) {
+    const gameCard = document.createElement("div");
+    const gameInfo = document.createElement("p");
+    const deleteButton = document.createElement("button");
+
+    gameCard.classList.add("game-card");
+    gameInfo.classList.add("game-info");
+    deleteButton.classList.add("game-delete");
+
+    gameInfo.textContent = `${game.title} ${game.year}`
+    deleteButton.textContent = "X";
+    
+    gameCard.append(gameInfo, deleteButton);
+    gameInfo.append(title, year);
+
+    return gameCard;
+}
