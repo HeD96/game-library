@@ -13,11 +13,9 @@ class Shelf {
         const rating = prompt("Оценка");
         const played = prompt("играл / не играл") === "играл" ? true : false;
 
-        const newBook = new BookCreator(title, author, year, pages, rating, isRead);
-        console.log(newBook);
-        this.userLibrary.push(newBook);
-
-        displayBook(newBook);
+        const newGame = new Gamecard(title, year, genre, developer, publisher, rating, played);
+        this.userShelf.push(newGame);
+        // displayBook(newBook);
     }
 
     deleteGame(theBook, card) {
@@ -27,14 +25,17 @@ class Shelf {
     }
 }
 
-class GamecardCreator {
-    constructor(title, year, rating, played) {
+const eliasGames = new Shelf("Elias");
+
+class Gamecard {
+    constructor(title, year, genre, developer, publisher, rating, played) {
         this.title = title;
-        this.author = author;
         this.year = year;
-        this.pages = pages;
+        this.genre = genre;
+        this.developer = developer;
+        this.publisher = publisher;
         this.rating = rating;
-        this.isRead = isRead;
+        this.played = played;
         this.id = this.generateID();
     }
 
@@ -42,3 +43,6 @@ class GamecardCreator {
         return Math.random().toString(36).substring(2, 15);
     }
 }
+
+const addGameButton = document.querySelector(".add-button");
+addGameButton.addEventListener("click", () => { eliasGames.addGame() });
