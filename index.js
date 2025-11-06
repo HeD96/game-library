@@ -47,20 +47,36 @@ class Gamecard {
 const addGameButton = document.querySelector(".add-button");
 addGameButton.addEventListener("click", () => { eliasGames.addGame() });
 
-function renderCard(game) {
+function clickEventHandler(elements) {
+    element.forEach(event => {
+
+    });
+}
+
+function displayCard(game) {
+    const shelf = document.querySelector(".shelf");
     const gameCard = document.createElement("div");
-    const gameInfo = document.createElement("p");
+    const gameImg = document.createElement("img");
+    const gameImgWrap = document.createElement("div");
+    const gameInfo = document.createElement("div");
+    const title = document.createElement("p");
+    const year = document.createElement("p");
     const deleteButton = document.createElement("button");
 
     gameCard.classList.add("game-card");
     gameInfo.classList.add("game-info");
+    gameImg.classList.add("game-image");
     deleteButton.classList.add("game-delete");
 
-    gameInfo.textContent = `${game.title} ${game.year}`
+    title.textContent = `${game.title}`;
+    year.textContent = `${game.year}`;
     deleteButton.textContent = "X";
     
-    gameCard.append(gameInfo, deleteButton);
+    shelf.append(gameCard);
+    gameCard.append(gameImgWrap, gameInfo, deleteButton);
+    gameImgWrap.append(gameImg);
     gameInfo.append(title, year);
+    
 
-    return gameCard;
+    
 }
