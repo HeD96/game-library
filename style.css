@@ -51,3 +51,11 @@ main {
     padding: 2rem;
     display: flex;
 }
+
+.game-card {
+    border: 2px solid green;
+}
+
+.game-image {
+    height: 10rem;
+}
