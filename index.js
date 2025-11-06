@@ -49,9 +49,11 @@ class Gamecard {
 const addGameButton = document.querySelector(".add-button");
 addGameButton.addEventListener("click", () => { eliasGames.addGame() });
 
-function clickEventHandler(elements) {
-    element.forEach(event => {
-
+function clickEventHandler(elements, game) {
+    elements.forEach(event => {
+        event.addEventListener("click", function() {
+            console.log(JSON.stringify(game, null, 2));
+        });
     });
 }
 
@@ -84,6 +86,5 @@ function displayCard(game) {
     gameImgWrap.append(gameImg, deleteButton);
     gameInfo.append(title, year);
     
-
-    
+    clickEventHandler([gameImgWrap], game);
 }
