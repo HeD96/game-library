@@ -15,7 +15,7 @@ class Shelf {
 
         const newGame = new Gamecard(title, year, genre, developer, publisher, rating, played);
         this.userShelf.push(newGame);
-        // displayBook(newBook);
+        displayCard(newGame);
     }
 
     deleteGame(theBook, card) {
@@ -26,6 +26,8 @@ class Shelf {
 }
 
 const eliasGames = new Shelf("Elias");
+const header = document.querySelector("header p");
+header.textContent = `${eliasGames.user} games`;
 
 class Gamecard {
     constructor(title, year, genre, developer, publisher, rating, played) {
@@ -65,16 +67,21 @@ function displayCard(game) {
 
     gameCard.classList.add("game-card");
     gameInfo.classList.add("game-info");
+    title.classList.add("title");
+    year.classList.add("year");
     gameImg.classList.add("game-image");
+    gameImgWrap.classList.add("image-wrapper");
     deleteButton.classList.add("game-delete");
+
+    gameImg.setAttribute("src", "./images/placeholder-cover.png");
 
     title.textContent = `${game.title}`;
     year.textContent = `${game.year}`;
     deleteButton.textContent = "X";
     
     shelf.append(gameCard);
-    gameCard.append(gameImgWrap, gameInfo, deleteButton);
-    gameImgWrap.append(gameImg);
+    gameCard.append(gameImgWrap, gameInfo);
+    gameImgWrap.append(gameImg, deleteButton);
     gameInfo.append(title, year);
     
 

@@ -3,5 +3,5 @@ const newGame2 = new Gamecard("Max Payne", 2012, "Action/TPS", "Rockstar Studios
 
 eliasGames.userShelf.push(newGame1, newGame2);
 
-// displayBook(newBook1);
-// displayBook(newBook2);
+displayCard(newGame1);
+displayCard(newGame2);
