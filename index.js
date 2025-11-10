@@ -5,13 +5,14 @@ class Shelf {
     }
 
     addGame() {
-        const title = prompt("Название");
-        const year = prompt("Год");
-        const genre = prompt("Жанр");
-        const developer = prompt("Разработчик");
-        const publisher = prompt("Издатель");
-        const rating = prompt("Оценка");
-        const played = prompt("играл / не играл") === "играл" ? true : false;
+        gameForm();
+        // const title = prompt("Название");
+        // const year = prompt("Год");
+        // const genre = prompt("Жанр");
+        // const developer = prompt("Разработчик");
+        // const publisher = prompt("Издатель");
+        // const rating = prompt("Оценка");
+        // const played = prompt("играл / не играл") === "играл" ? true : false;
 
         const newGame = new Gamecard(title, year, genre, developer, publisher, rating, played);
         this.userShelf.push(newGame);
@@ -87,4 +88,9 @@ function displayCard(game) {
     gameInfo.append(title, year);
     
     clickEventHandler([gameImgWrap], game);
+}
+
+function gameForm() {
+    const gameForm = document.querySelector("form");
+    gameForm.classList.toggle("hidden");
 }
