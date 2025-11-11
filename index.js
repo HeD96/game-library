@@ -4,16 +4,8 @@ class Shelf {
         this.userShelf = [];
     }
 
-    addGame() {
-        gameForm();
-        // const title = prompt("Название");
-        // const year = prompt("Год");
-        // const genre = prompt("Жанр");
-        // const developer = prompt("Разработчик");
-        // const publisher = prompt("Издатель");
-        // const rating = prompt("Оценка");
-        // const played = prompt("играл / не играл") === "играл" ? true : false;
-
+    async addGame() {
+        const { titleValue : title, yearValue : year, genreValue : genre, devValue : developer, pubValue : publisher, ratingValue : rating, playedValue : played} = await gameForm();
         const newGame = new Gamecard(title, year, genre, developer, publisher, rating, played);
         this.userShelf.push(newGame);
         displayCard(newGame);
@@ -91,6 +83,38 @@ function displayCard(game) {
 }
 
 function gameForm() {
-    const gameForm = document.querySelector("form");
-    gameForm.classList.toggle("hidden");
+    return new Promise((resolve) => {
+        const gameForm = document.querySelector("form");
+        gameForm.classList.toggle("hidden");
+
+        const title = document.querySelector("#title");
+        const year = document.querySelector("#year");
+        const genre = document.querySelector("#genre");
+        const developer = document.querySelector("#developer");
+        const publisher = document.querySelector("#publisher");
+        const rating = document.querySelector("#rating");
+        const played = document.querySelector("#played");
+        const submitButton = document.querySelector("#submit");
+
+        const handleClick = function(e) {
+            e.preventDefault();
+            // console.log(title.value, year.value, genre.value, developer.value, publisher.value);
+
+            gameForm.classList.toggle("hidden");
+
+            const result = {
+                titleValue : title.value, 
+                yearValue: year.value, 
+                genreValue : genre.value, 
+                devValue : developer.value, 
+                pubValue : publisher.value ,
+                ratingValue : rating.value,
+                playedValue : played.value
+            }
+            submitButton.removeEventListener("click", handleClick);
+
+            resolve(result);
+        }
+        submitButton.addEventListener("click", handleClick);
+    });
 }
