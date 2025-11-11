@@ -137,6 +137,11 @@ label {
     width: 5rem;
 }
 
+#rating, #played {
+    width: 5rem;
+    height: 2rem;
+}
+
 .hidden {
     display: none;
 }
