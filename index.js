@@ -85,22 +85,21 @@ function displayCard(game) {
 function gameForm() {
     return new Promise((resolve) => {
         const gameForm = document.querySelector("form");
-        gameForm.classList.toggle("hidden");
-
         const title = document.querySelector("#title");
         const year = document.querySelector("#year");
         const genre = document.querySelector("#genre");
         const developer = document.querySelector("#developer");
         const publisher = document.querySelector("#publisher");
-        const rating = document.querySelector("#rating");
         const played = document.querySelector("#played");
         const submitButton = document.querySelector("#submit");
+        gameForm.classList.toggle("hidden");
 
         const handleClick = function(e) {
             e.preventDefault();
-            // console.log(title.value, year.value, genre.value, developer.value, publisher.value);
 
             gameForm.classList.toggle("hidden");
+
+            const rating = document.querySelector("input[name='rating']:checked");
 
             const result = {
                 titleValue : title.value, 
