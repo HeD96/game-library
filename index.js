@@ -11,9 +11,9 @@ class Shelf {
         displayCard(newGame);
     }
 
-    deleteGame(theBook, card) {
-        const index = this.userLibrary.findIndex(element => element.id === theBook.id);
-        this.userLibrary.splice(index, 1);
+    deleteGame(game, card) {
+        const index = this.userShelf.findIndex(element => element.id === game.id);
+        this.userShelf.splice(index, 1);
         card.remove();
     }
 }
@@ -42,11 +42,18 @@ class Gamecard {
 const addGameButton = document.querySelector(".add-button");
 addGameButton.addEventListener("click", () => { eliasGames.addGame() });
 
-function clickEventHandler(elements, game) {
+function clickEventHandler(elements, game, gameCard) {
     elements.forEach(event => {
-        event.addEventListener("click", function() {
-            console.log(JSON.stringify(game, null, 2));
-        });
+        if (event.getAttribute("data-event") === "get-info") {
+            event.addEventListener("click", function() {
+                console.log(JSON.stringify(game, null, 2));
+            });
+        }
+        if (event.getAttribute("data-event") === "delete-card") {
+            event.addEventListener("click", function() {
+                eliasGames.deleteGame(game, gameCard);
+            });
+        }
     });
 }
 
@@ -69,6 +76,8 @@ function displayCard(game) {
     deleteButton.classList.add("game-delete");
 
     gameImg.setAttribute("src", "./images/placeholder-cover.png");
+    gameImgWrap.setAttribute("data-event", "get-info");
+    deleteButton.setAttribute("data-event", "delete-card");
 
     title.textContent = `${game.title}`;
     year.textContent = `${game.year}`;
@@ -79,7 +88,7 @@ function displayCard(game) {
     gameImgWrap.append(gameImg, deleteButton);
     gameInfo.append(title, year);
     
-    clickEventHandler([gameImgWrap], game);
+    clickEventHandler([gameImgWrap, deleteButton], game, gameCard);
 }
 
 function gameForm() {
@@ -90,7 +99,6 @@ function gameForm() {
         const genre = document.querySelector("#genre");
         const developer = document.querySelector("#developer");
         const publisher = document.querySelector("#publisher");
-        const played = document.querySelector("#played");
         const submitButton = document.querySelector("#submit");
         gameForm.classList.toggle("hidden");
 
@@ -100,6 +108,7 @@ function gameForm() {
             gameForm.classList.toggle("hidden");
 
             const rating = document.querySelector("input[name='rating']:checked");
+            const played = document.querySelector("input[name='played']:checked");
 
             const result = {
                 titleValue : title.value, 
