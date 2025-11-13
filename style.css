@@ -102,7 +102,7 @@ main {
 }
 
 .game-form {
-    height: 45rem;
+    height: 50rem;
     width: 35rem;
     padding: 2rem;
 
@@ -143,9 +143,43 @@ label {
     height: 1rem;
 }
 
-#rating {
+.rating-wrap {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.rating-wrap label {
+    margin-top: 0.5rem;
+}
+
+.played-wrap {
+    padding-left: 1rem;
+    padding-top: 0.9rem;
+    border-radius: 0.5rem;
+}
+
+#played label, #played input {
+    display: inline-block;
+}
+
+#played input {
+    margin-left: 0.5rem;
+}
+
+#rating, #played {
     display: flex;
     gap: 1.2rem;
+}
+
+#rating input, #played input {
+    margin-bottom: 0.5rem;
+}
+
+#rating label {
+    text-align: center;
 }
 
 #submit {

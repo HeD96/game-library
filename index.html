@@ -36,20 +36,23 @@
                     <label for="publisher">Издатель</label>
                     <input id="publisher" type="text">
                 </div>
-                <div>
-                    <label for="rating">Оценка</label>
+                <fieldset class="rating-wrap">
+                    <legend>Оценка</legend>
                     <div id="rating">
-                        <input class="radio" type="radio" name ="rating" value="1">
-                        <input class="radio" type="radio" name ="rating" value="2">
-                        <input class="radio" type="radio" name ="rating" value="3">
-                        <input class="radio" type="radio" name ="rating" value="4">
-                        <input class="radio" type="radio" name ="rating" value="5">
+                        <label for=""><input class="radio" type="radio" name ="rating" value="1">1</label>
+                        <label for=""><input class="radio" type="radio" name ="rating" value="2">2</label>
+                        <label for=""><input class="radio" type="radio" name ="rating" value="3">3</label>
+                        <label for=""><input class="radio" type="radio" name ="rating" value="4">4</label>
+                        <label for=""><input class="radio" type="radio" name ="rating" value="5">5</label>
                     </div>
-                </div>
-                <div>
-                    <label for="played">Играл</label>
-                    <input id="played" type="text">
-                </div>
+                </fieldset>
+                <fieldset class="played-wrap">
+                    <legend>Пройдено</legend>
+                    <div id="played">
+                        <label for="">Да<input class="radio" type="radio" name="played" value="true"></label>
+                        <label for="">Нет<input class="radio" type="radio" name="played" value="false"></label>
+                    </div>
+                </fieldset>
                 <button id="submit">Добавить</button>
             </form>
         </div>
