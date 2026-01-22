@@ -4,9 +4,9 @@ class Shelf {
         this.userShelf = [];
     }
 
-    async addGame() {
-        const { titleValue : title, yearValue : year, genreValue : genre, devValue : developer, pubValue : publisher, ratingValue : rating, playedValue : played} = await gameForm();
-        const newGame = new Gamecard(title, year, genre, developer, publisher, rating, played);
+    addGame(gameInfo) {
+        const { title, year, genre, developer, publisher, rating, played, logo} = gameInfo;
+        const newGame = new Gamecard(title, year, genre, developer, publisher, rating, played, logo);
         this.userShelf.push(newGame);
         displayCard(newGame);
     }
@@ -23,7 +23,7 @@ const header = document.querySelector("header p");
 header.textContent = `${eliasGames.user} games`;
 
 class Gamecard {
-    constructor(title, year, genre, developer, publisher, rating, played) {
+    constructor(title, year, genre, developer, publisher, rating, played, logo) {
         this.title = title;
         this.year = year;
         this.genre = genre;
@@ -31,6 +31,7 @@ class Gamecard {
         this.publisher = publisher;
         this.rating = rating;
         this.played = played;
+        this.logo = logo;
         this.id = this.generateID();
     }
 
@@ -40,22 +41,22 @@ class Gamecard {
 }
 
 const addGameButton = document.querySelector(".add-button");
-addGameButton.addEventListener("click", () => { eliasGames.addGame() });
+addGameButton.addEventListener("click", gameForm);
 
-function clickEventHandler(elements, game, gameCard) {
-    elements.forEach(event => {
-        if (event.getAttribute("data-event") === "get-info") {
-            event.addEventListener("click", function() {
-                console.log(JSON.stringify(game, null, 2));
-            });
-        }
-        if (event.getAttribute("data-event") === "delete-card") {
-            event.addEventListener("click", function() {
-                eliasGames.deleteGame(game, gameCard);
-            });
-        }
-    });
-}
+// function cardEventHandler(elements, game, gameCard) {
+//     elements.forEach(element => {
+//         if (element.getAttribute("data-event") === "get-info") {
+//             element.addEventListener("click", function() {
+//                 console.log(JSON.stringify(game, null, 2));
+//             });
+//         }
+//         if (element.getAttribute("data-event") === "delete-card") {
+//             element.addEventListener("click", function() {
+//                 eliasGames.deleteGame(game, gameCard);
+//             });
+//         }
+//     });
+// }
 
 function displayCard(game) {
     const shelf = document.querySelector(".shelf");
@@ -75,7 +76,7 @@ function displayCard(game) {
     gameImgWrap.classList.add("image-wrapper");
     deleteButton.classList.add("game-delete");
 
-    gameImg.setAttribute("src", "./images/placeholder-cover.png");
+    gameImg.setAttribute("src", game.logo);
     gameImgWrap.setAttribute("data-event", "get-info");
     deleteButton.setAttribute("data-event", "delete-card");
 
@@ -88,41 +89,66 @@ function displayCard(game) {
     gameImgWrap.append(gameImg, deleteButton);
     gameInfo.append(title, year);
     
-    clickEventHandler([gameImgWrap, deleteButton], game, gameCard);
+    // cardEventHandler([gameImgWrap, deleteButton], game, gameCard);
 }
+
 
 function gameForm() {
     return new Promise((resolve) => {
-        const gameForm = document.querySelector("form");
-        const title = document.querySelector("#title");
-        const year = document.querySelector("#year");
-        const genre = document.querySelector("#genre");
-        const developer = document.querySelector("#developer");
-        const publisher = document.querySelector("#publisher");
+        const gameForm = document.querySelector(".game-form");
+        const nameSearch = document.querySelector("#title");
         const submitButton = document.querySelector("#submit");
-        gameForm.classList.toggle("hidden");
+        gameForm.classList.remove("hidden");
 
-        const handleClick = function(e) {
+        const gameInfo = {
+                title : "",
+                year : "",
+                genre : "",
+                developer : "",
+                publisher : "",
+                rating : 0,
+                played : false,
+                logo : ""
+            }
+
+        const searchByName = function() {
+            const name = encodeURI(nameSearch.value);
+            const apiKey = "c051b2e756ca434ca210fbaaaa5e5c22";
+            fetch(`https://api.rawg.io/api/games?key=${apiKey}&search=${name}`)
+                .then(response => response.json())
+                .then(response => response.results[0].id)
+                .then(gameID => fetch(`https://api.rawg.io/api/games/${gameID}?key=${apiKey}`))
+                .then(response => response.json())
+                .then((gameOfChoice) => {
+                    gameInfo.title = gameOfChoice.name;
+                    gameInfo.year = new Date(gameOfChoice.released).getFullYear();
+                    gameInfo.genre = gameOfChoice.genres;
+                    gameInfo.developer = gameOfChoice.developers;
+                    gameInfo.publisher = gameOfChoice.publishers;
+                    gameInfo.logo = gameOfChoice.background_image;
+
+                    console.log(gameOfChoice);
+                })
+        }
+
+        const submitByClick = function(e) {
             e.preventDefault();
-
-            gameForm.classList.toggle("hidden");
 
             const rating = document.querySelector("input[name='rating']:checked");
             const played = document.querySelector("input[name='played']:checked");
 
-            const result = {
-                titleValue : title.value, 
-                yearValue: year.value, 
-                genreValue : genre.value, 
-                devValue : developer.value, 
-                pubValue : publisher.value ,
-                ratingValue : rating.value,
-                playedValue : played.value
-            }
-            submitButton.removeEventListener("click", handleClick);
+            console.log(rating.value);
 
-            resolve(result);
+            gameInfo.rating = rating.value;
+            gameInfo.played = played.value;
+
+            console.log(gameInfo);
+
+            eliasGames.addGame(gameInfo);
         }
-        submitButton.addEventListener("click", handleClick);
+
+        nameSearch.addEventListener("focusout", searchByName);
+        submitButton.addEventListener("click", submitByClick);
     });
 }
+

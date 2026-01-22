@@ -51,16 +51,14 @@ main {
     padding: 2rem;
 
     display: grid;
-    grid-template-columns: repeat(auto-fit, 13.5rem);
+    grid-template-columns: repeat(auto-fit, 18rem);
     grid-template-rows: repeat(3, 1fr);
     gap: 3rem;
     justify-content: left;
-
-    position: relative;
 }
 
 .game-card {
-    /* border: 2px solid green; */
+    border: 2px solid green;
 
     display: flex;
     flex-direction: column;
@@ -70,12 +68,12 @@ main {
 }
 
 .image-wrapper {
-    height: 18rem;
+    height: auto;
     position: relative;
 }
 
 .game-image {
-    height: 100%;
+    width: 100%;
     border-radius: 0.5rem;
 }
 
@@ -105,7 +103,7 @@ main {
 }
 
 .game-form {
-    height: 50rem;
+    height: auto;
     width: 35rem;
     padding: 2rem;
 
@@ -139,6 +137,39 @@ label {
 
 #year {
     width: 5rem;
+}
+
+.select-genre {
+    width: 100%;
+
+    border: 2px solid brown;
+    
+    font-size: 1rem;
+    line-height: 1.4rem;
+
+    cursor: pointer;
+}
+
+.option-list {
+    width: 100%;
+    padding: 0.5rem;
+    list-style-type: none;
+    border: 2px solid green;
+}
+
+.option-list li {
+    border-bottom: 2px solid gray;
+    cursor: pointer;
+}
+
+.option-list li:hover {
+    background-color: gray;
+    color: white;
+}
+
+.clicked {
+    background-color: red;
+    color: white;
 }
 
 .radio {
@@ -193,7 +224,8 @@ label {
     background-color: white;
     border-radius: 0.5rem;
 
-    margin: 3rem auto;
+    margin-top: 3rem;
+    margin-inline: auto;
 }
 
 .hidden {

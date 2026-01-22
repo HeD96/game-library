@@ -17,38 +17,17 @@
         <div class="shelf">
             <form class="game-form hidden" action="">
                 <div>
-                    <label for="title">Название</label>
+                    <label for="title">Поиск по названию</label>
                     <input id="title" type="text">
                 </div>
-                <div>
-                    <label for="year">Год</label>
-                    <input id="year" type="number">
-                </div>
-                <div>
-                    <div class="select-genre">Жанр</div>
-                        <ul class="option-list">
-                            <li class="genre-option" value="Action">Action</li>
-                            <li class="genre-option" value="Shooter">Shooter</li>
-                            <li class="genre-option" value="RPG">RPG</li>
-                            <li class="genre-option" value="Adventure">Adventure</li>
-                            <li class="genre-option" value="Strategy">Strategy</li>
-                            <li class="genre-option" value="Simulator">Simulator</li>
-                        </ul>
-                </div>
-                <div>
-                    <label for="developer">Разработчик</label>
-                    <input id="developer" type="text">
-                </div>
-                <div>
-                    <label for="publisher">Издатель</label>
-                    <input id="publisher" type="text">
-                </div>
+                <p class="game-found">PPP</p>
+                <img class="game-logo" src="" alt="">
                 <fieldset class="rating-wrap">
                     <legend>Оценка</legend>
                     <div id="rating">
                         <label for=""><input class="radio" type="radio" name ="rating" value="1">1</label>
                         <label for=""><input class="radio" type="radio" name ="rating" value="2">2</label>
-                        <label for=""><input class="radio" type="radio" name ="rating" value="3">3</label>
+                        <label for=""><input class="radio" type="radio" name ="rating" value="3" checked>3</label>
                         <label for=""><input class="radio" type="radio" name ="rating" value="4">4</label>
                         <label for=""><input class="radio" type="radio" name ="rating" value="5">5</label>
                     </div>
@@ -56,7 +35,7 @@
                 <fieldset class="played-wrap">
                     <legend>Пройдено</legend>
                     <div id="played">
-                        <label for="">Да<input class="radio" type="radio" name="played" value="true"></label>
+                        <label for="">Да<input class="radio" type="radio" name="played" value="true" checked></label>
                         <label for="">Нет<input class="radio" type="radio" name="played" value="false"></label>
                     </div>
                 </fieldset>
