@@ -22,6 +22,8 @@ body {
 header {
     text-align: center;
     font-size: 3rem;
+    margin: 0 auto;
+    width: fit-content;
 
     position: relative;
 }
@@ -29,59 +31,77 @@ header {
 .add-button {
     position: absolute;
 
-    height: 2rem;
-    width: 2rem;
+    height: 2.5rem;
+    width: 2.5rem;
 
     font-size: 1.8rem;
     font-weight: bold;
     color: rgb(44, 44, 44);
 
-    bottom: 1rem;
-    right: 2rem;
+    bottom: 0.7rem;
+    right: -4rem;
 }
 
 main {
     padding: 1rem;
 
     height: 100%;
+    background-color: #373A40;
 }
 
 .shelf {
-    border: 2px solid brown;
     padding: 2rem;
 
     display: grid;
-    grid-template-columns: repeat(auto-fit, 18rem);
+    grid-template-columns: repeat(auto-fit, 20rem);
     grid-template-rows: repeat(3, 1fr);
     gap: 3rem;
     justify-content: left;
+
+    max-width: 80%;
+    height: 100%;
+    margin: 0 auto;
+
+    background-color: #EEEEEE;
 }
 
 .game-card {
-    border: 2px solid green;
-
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    border-radius: 1rem;
     
     position: relative;
+
+    background-color: white;
+    box-shadow: 2px 0px 10px 2px rgb(0, 0, 0, 0.2); 
 }
 
 .image-wrapper {
-    height: auto;
+    height: 14rem;
     position: relative;
+}
+
+.image-wrapper:hover {
+    cursor: pointer;
 }
 
 .game-image {
     width: 100%;
-    border-radius: 0.5rem;
+    height: 100%;
+    border-radius: 1rem 1rem 0 0;
+}
+
+.game-info {
+    padding: 1rem;
 }
 
 .title {
-    font-size: 1.2rem;
+    font-size: 1.6rem;
+    color: rgb(26, 26, 26);
 }
 
 .year {
+    font-size: 1.2rem;
     color: rgba(0, 0, 0, 0.5);
 }
 
@@ -100,6 +120,7 @@ main {
 
 .game-delete:hover {
     background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
 }
 
 .game-form {
@@ -115,7 +136,6 @@ main {
 
     background-color: white;
 
-    border: 2px solid green;
     border-radius: 0.5rem;
 }
 
@@ -133,6 +153,20 @@ input {
 label {
     margin-bottom: 0.5rem;
     display: block;
+}
+
+.game-list {
+    list-style: none;
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    height: fit-content;
+}
+
+.game-list li:hover {
+    cursor: pointer;
+    background-color: grey;
+    color: white;
 }
 
 #year {

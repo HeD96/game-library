@@ -43,20 +43,20 @@ class Gamecard {
 const addGameButton = document.querySelector(".add-button");
 addGameButton.addEventListener("click", gameForm);
 
-// function cardEventHandler(elements, game, gameCard) {
-//     elements.forEach(element => {
-//         if (element.getAttribute("data-event") === "get-info") {
-//             element.addEventListener("click", function() {
-//                 console.log(JSON.stringify(game, null, 2));
-//             });
-//         }
-//         if (element.getAttribute("data-event") === "delete-card") {
-//             element.addEventListener("click", function() {
-//                 eliasGames.deleteGame(game, gameCard);
-//             });
-//         }
-//     });
-// }
+function cardEventHandler(elements, game, gameCard) {
+    elements.forEach(element => {
+        if (element.getAttribute("data-event") === "get-info") {
+            element.addEventListener("click", function() {
+                console.log(JSON.stringify(game, null, 2));
+            });
+        }
+        if (element.getAttribute("data-event") === "delete-card") {
+            element.addEventListener("click", function() {
+                eliasGames.deleteGame(game, gameCard);
+            });
+        }
+    });
+}
 
 function displayCard(game) {
     const shelf = document.querySelector(".shelf");
@@ -89,66 +89,92 @@ function displayCard(game) {
     gameImgWrap.append(gameImg, deleteButton);
     gameInfo.append(title, year);
     
-    // cardEventHandler([gameImgWrap, deleteButton], game, gameCard);
+    cardEventHandler([gameImgWrap, deleteButton], game, gameCard);
+}
+
+function displaySearch(gameList) {
+    const searchedItems = document.querySelectorAll(".game-list li");
+    const searchList = document.querySelector(".game-list");
+    const searchInput = document.querySelector("#title");
+    searchList.classList.remove("hidden");
+
+    searchedItems.forEach((gameName, index) => {
+        gameName.textContent = gameList[index];
+    })
+
+    const selectGame = function() {
+
+    }
+
+    console.log(searchList);
 }
 
 
 function gameForm() {
-    return new Promise((resolve) => {
-        const gameForm = document.querySelector(".game-form");
-        const nameSearch = document.querySelector("#title");
-        const submitButton = document.querySelector("#submit");
-        gameForm.classList.remove("hidden");
+    const gameForm = document.querySelector(".game-form");
+    const searchName = document.querySelector("#title");
+    const searchedItems = document.querySelectorAll(".game-list li");
+    const searchList = document.querySelector(".game-list");
+    const submitButton = document.querySelector("#submit");
+    gameForm.classList.remove("hidden");
 
-        const gameInfo = {
-                title : "",
-                year : "",
-                genre : "",
-                developer : "",
-                publisher : "",
-                rating : 0,
-                played : false,
-                logo : ""
-            }
-
-        const searchByName = function() {
-            const name = encodeURI(nameSearch.value);
-            const apiKey = "c051b2e756ca434ca210fbaaaa5e5c22";
-            fetch(`https://api.rawg.io/api/games?key=${apiKey}&search=${name}`)
-                .then(response => response.json())
-                .then(response => response.results[0].id)
-                .then(gameID => fetch(`https://api.rawg.io/api/games/${gameID}?key=${apiKey}`))
-                .then(response => response.json())
-                .then((gameOfChoice) => {
-                    gameInfo.title = gameOfChoice.name;
-                    gameInfo.year = new Date(gameOfChoice.released).getFullYear();
-                    gameInfo.genre = gameOfChoice.genres;
-                    gameInfo.developer = gameOfChoice.developers;
-                    gameInfo.publisher = gameOfChoice.publishers;
-                    gameInfo.logo = gameOfChoice.background_image;
-
-                    console.log(gameOfChoice);
-                })
+    const gameInfo = {
+            title : "",
+            year : "",
+            genre : "",
+            developer : "",
+            publisher : "",
+            rating : 0,
+            played : false,
+            logo : ""
         }
 
-        const submitByClick = function(e) {
-            e.preventDefault();
+    
 
-            const rating = document.querySelector("input[name='rating']:checked");
-            const played = document.querySelector("input[name='played']:checked");
+    const searchByName = function() {
+        const name = encodeURI(searchName.value);
+        const apiKey = "c051b2e756ca434ca210fbaaaa5e5c22";
+        fetch(`https://api.rawg.io/api/games?key=${apiKey}&search=${name}`)
+            .then(response => response.json())
+            .then(data => data.results.map(game => game.name).slice(0, 10))
+            .then(gameList => displaySearch(gameList))
+        // fetch(`https://api.rawg.io/api/games?key=${apiKey}&search=${name}`)
+        //     .then(response => response.json())
+        //     .then(response => response.results[0].id)
+        //     .then(gameID => fetch(`https://api.rawg.io/api/games/${gameID}?key=${apiKey}`))
+        //     .then(response => response.json())
+        //     .then((gameOfChoice) => {
+        //         gameInfo.title = gameOfChoice.name;
+        //         gameInfo.year = new Date(gameOfChoice.released).getFullYear();
+        //         gameInfo.genre = gameOfChoice.genres.map((genre) => genre.name)
+        //         gameInfo.developer = gameOfChoice.developers[0].name;
+        //         gameInfo.publisher = gameOfChoice.publishers[0].name;
+        //         gameInfo.logo = gameOfChoice.background_image;
 
-            console.log(rating.value);
+        //         console.log(gameOfChoice);
+        //     })
 
-            gameInfo.rating = rating.value;
-            gameInfo.played = played.value;
 
-            console.log(gameInfo);
+    }
 
-            eliasGames.addGame(gameInfo);
-        }
+    const submitByClick = function(e) {
+        e.preventDefault();
 
-        nameSearch.addEventListener("focusout", searchByName);
-        submitButton.addEventListener("click", submitByClick);
-    });
+        const rating = document.querySelector("input[name='rating']:checked");
+        const played = document.querySelector("input[name='played']:checked");
+
+        gameInfo.rating = rating.value;
+        gameInfo.played = played.value;
+        eliasGames.addGame(gameInfo);
+    }
+
+    const selectGame = function(item) {
+        searchName.value = item.textContent;
+        searchList.classList.add("hidden");
+    }
+
+    searchName.addEventListener("keyup", searchByName);
+    searchedItems.forEach(item => item.addEventListener("click", selectGame.bind(item, item)));
+    submitButton.addEventListener("click", submitByClick);
 }
 
